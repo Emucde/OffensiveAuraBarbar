@@ -1,4 +1,4 @@
-# OffensiveAuraBarbar
+# Offensive Aura Barbarian
 This mod introduces a significant twist to Diablo 2 Resurrected by creating two new classes through a skill tree swap:
 
 - Combat Skills, Combat Masteries and Offensive Auras Barbarian: This class focuses on enhancing the Barbarian's combat skills and offensive capabilities, allowing for a more aggressive playstyle.
