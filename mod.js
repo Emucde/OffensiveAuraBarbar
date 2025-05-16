@@ -174,13 +174,19 @@ magicprefix.rows.forEach(row => {
     {
         if(row['mod1param'] === '10') // Offensive Auras
         {
-            // row['mod1param'] = 14;
             row['classspecific'] = 'bar';
+            if(row['itype1'] == 'scep')
+            {
+                row['itype1'] = 'phlm';
+            }
         }
         else if(row['mod1param'] === '14') // Warcries
         {
-            // row['mod1param'] = 10;
             row['classspecific'] = 'pal';
+            if(row['itype1'] == 'phlm')
+            {
+                row['itype1'] = 'scep';
+            }
         }
     }
 });
@@ -188,9 +194,17 @@ magicprefix.rows.forEach(row => {
 magicsuffix.rows.forEach(row => {
     if (warcrySkills.some(skill => row['Name'] && row['Name'].includes(skill))) {
         row['class'] = 'pal';
+        if(row['itype1'] == 'phlm')
+        {
+            row['itype1'] = 'scep';
+        }
     }
     else if (row['Name'] === 'of Potion Finding') {
         row['class'] = 'pal';
+        if(row['itype1'] == 'phlm')
+        {
+            row['itype1'] = 'scep';
+        }
     }
 });
 
