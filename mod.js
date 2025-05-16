@@ -16,6 +16,12 @@ const skilldesc = D2RMM.readTsv(skilldescFilename);
 const skillsJsonFilename = 'local\\lng\\strings\\skills.json';
 const skillsJson = D2RMM.readJson(skillsJsonFilename);
 
+const magicprefixFileName = 'global\\excel\\magicprefix.txt';
+const magicprefix = D2RMM.readTsv(magicprefixFileName);
+
+const magicsuffixFileName = 'global\\excel\\magicsuffix.txt';
+const magicsuffix = D2RMM.readTsv(magicsuffixFileName);
+
 // Token of absolution recipe
 cubemain.rows.push(
     {
@@ -109,36 +115,6 @@ offensiveSkills.forEach((skill, index) => {
     }
 });
 
-// const clay_golem = skilldesc.rows.find(row => row['skilldesc'] === 'clay golem');
-// if(clay_golem)
-// {
-//     clay_golem['IconCel'] = 16;
-// }
-
-// const golem_mastery = skilldesc.rows.find(row => row['skilldesc'] === 'golem mastery');
-// if(golem_mastery)
-// {
-//     golem_mastery['IconCel'] = 18;
-// }
-
-// const frost_nova = skilldesc.rows.find(row => row['skilldesc'] === 'frost nova');
-// if(frost_nova)
-// {
-//     frost_nova['IconCel'] = 18;
-// }
-
-// const ice_blast = skilldesc.rows.find(row => row['skilldesc'] === 'ice blast');
-// if(ice_blast)
-// {
-//     ice_blast['IconCel'] = 26;
-// }
-
-// const corpse_explosion = skilldesc.rows.find(row => row['skilldesc'] === 'corpse explosion');
-// if(corpse_explosion)
-// {
-//     corpse_explosion['IconCel'] = 16;
-// }
-
 D2RMM.copyFile(
     'skill_trees', // <mod folder>\hd
     'hd\\global\\ui\\spells\\skill_trees', // <diablo 2 folder>\mods\<modname>\<modname>.mpq\data\hd
@@ -193,9 +169,36 @@ if (skillCategoryIndex !== -1) {
     };
 }
 
+magicprefix.rows.forEach(row => {
+    if(row['mod1code'] == 'skilltab')
+    {
+        if(row['mod1param'] === '10') // Offensive Auras
+        {
+            // row['mod1param'] = 14;
+            row['classspecific'] = 'bar';
+        }
+        else if(row['mod1param'] === '14') // Warcries
+        {
+            // row['mod1param'] = 10;
+            row['classspecific'] = 'pal';
+        }
+    }
+});
+
+magicsuffix.rows.forEach(row => {
+    if (warcrySkills.some(skill => row['Name'] && row['Name'].includes(skill))) {
+        row['class'] = 'pal';
+    }
+    else if (row['Name'] === 'of Potion Finding') {
+        row['class'] = 'pal';
+    }
+});
+
 D2RMM.writeTsv(cubemainFileName, cubemain);
 D2RMM.writeTsv(plrTypeFileName, plrType);
 D2RMM.writeTsv(playerclassFileName, playerclass);
 D2RMM.writeTsv(skillsFileName, skills);
 D2RMM.writeTsv(skilldescFilename, skilldesc);
 D2RMM.writeJson(skillsJsonFilename, skillsJson);
+D2RMM.writeTsv(magicprefixFileName, magicprefix);
+D2RMM.writeTsv(magicsuffixFileName, magicsuffix);
